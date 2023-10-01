@@ -4,8 +4,9 @@ FROM debian:bullseye-slim
 # Update package lists and install necessary packages
 RUN apt-get update && apt-get install -y \
     build-essential \
-    # gcc-arm-none-eabi \
-    python3
+    gcc-arm-none-eabi \
+    python3 \
+    python3-pip  # Install pip3
 
 # Cleanup to reduce the image size
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -13,8 +14,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Set a working directory (optional)
 WORKDIR /app
 
+# Install numpy using pip3
+RUN pip3 install numpy
+
 # You can add additional commands to customize your environment or install more packages if needed
 
 # Define the entry point or default command (optional)
 # CMD ["/bin/bash"]
- 
