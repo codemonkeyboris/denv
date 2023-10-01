@@ -3,7 +3,7 @@ Dockerized Develop Environment
 
 # Build
 - `docker build -t denv .`
-
+- `sudo cp denv.py /usr/local/bin/denv`
 
 
 # Python Examples
