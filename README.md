@@ -46,8 +46,22 @@ Type "help", "copyright", "credits" or "license" for more information.
 ```
 
 ## Run Script
+- Run hello
+```sh
+$ denv python3 examples/python_example/hello_denv.py
+Hello Denv
+```
 
+- Run numpy example
+```sh
+$ denv python3 examples/python_example/numpy_example.py 
+Addition Result: [ 7  9 11 13 15]
+Subtraction Result: [-5 -5 -5 -5 -5]
+Multiplication Result: [ 6 14 24 36 50]
+Division Result: [0.16666667 0.28571429 0.375      0.44444444 0.5       ]
+Square Root Result: [1.         1.41421356 1.73205081 2.         2.23606798]
 
+```
 
 
 # CPP Example
