@@ -1,24 +1,19 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import sys
 import os
 import subprocess
 
 def main():
-    if len(sys.argv) < 3:
-        print("Usage: denv.py <command> <script-path> [arguments...]")
+    if len(sys.argv) < 2:
+        print("Usage: denv.py <command> [arguments...]")
         sys.exit(1)
 
     command = sys.argv[1]
-    script_path = sys.argv[2]
-
-    if not os.path.exists(script_path):
-        print(f"Error: File '{script_path}' not found on the host.")
-        sys.exit(1)
 
     docker_image = "denv"  # Replace with your Docker image name
 
-    # Combine the command and script path, and append any additional arguments
-    docker_command = ["sudo", "docker", "run", "-it", "--rm", "-v", f"{os.getcwd()}:/app", docker_image, command, script_path] + sys.argv[3:]
+    # Combine the command and any additional arguments
+    docker_command = ["sudo", "docker", "run", "-it", "--rm", "-v", f"{os.getcwd()}:/app", docker_image] + sys.argv[1:]
 
     try:
         subprocess.run(docker_command, check=True)
