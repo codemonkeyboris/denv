@@ -16,16 +16,15 @@ def main():
     docker_command = ["sudo", "docker", "run", "-it", "--rm", "-v", f"{os.getcwd()}:/app", docker_image] + sys.argv[1:]
 
     try:
-        subprocess.run(docker_command, check=True)
+        subprocess.run(docker_command, check=True, stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError as e:
         if e.returncode == 127:
             print(f"Error: Command '{command}' not found in the Docker container.")
-        else:
-            print(f"Error running command in Docker container: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
     main()
+
 
 
 
