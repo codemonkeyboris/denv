@@ -18,11 +18,16 @@ def main():
     try:
         subprocess.run(docker_command, check=True)
     except subprocess.CalledProcessError as e:
-        print(f"Error running command in Docker container: {e}")
+        if e.returncode == 127:
+            print(f"Error: Command '{command}' not found in the Docker container.")
+        else:
+            print(f"Error running command in Docker container: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
     main()
+
+
 
 
 
