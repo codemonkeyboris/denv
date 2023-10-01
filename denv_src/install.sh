@@ -7,10 +7,8 @@ else
     docker_image_name="denv"
 fi
 
-# Build the Docker image
 docker build -t "$docker_image_name" .
 
-# Copy denv.py to /usr/local/bin
 cp denv.py /usr/local/bin/denv
 chmod +x /usr/local/bin/denv
 
