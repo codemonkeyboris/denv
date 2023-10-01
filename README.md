@@ -1,9 +1,18 @@
 # denv
-Dockerized Develop Environment
+The purpose of this project is simple: **dockerize your environment**, hence `denv`.
 
-# Build
+# Install
+## Use script
+```sh
+sudo sh install.sh
+```
+It's really not much. But, if you don't trust a script you don't know, do it manually.
+
+
+## Manually
 - `docker build -t denv .`
 - `sudo cp denv.py /usr/local/bin/denv`
+
 
 
 # Python Examples
@@ -83,4 +92,6 @@ HelloWorld.cpp  Makefile
 
 ```
 
-# Arduino Example
+# TODO
+- [ ] Add arduino example
+- [ ] Add Docker image to docker hub and be able to pull and rebuild automatically.
