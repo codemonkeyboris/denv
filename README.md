@@ -1,6 +1,19 @@
 # denv
 The purpose of this project is simple: **dockerize your environment**, hence `denv`.
 
+
+# Support
+Everything in this repo is tested under Ubuntu 22.04.
+
+You can add/change your own packages into the Dockerfile. But the Dockerfile in this repo has the things I need for my personal use, including things to add:
+
+- build-essential (gcc, g++ etc.)
+- gcc-arm-none-eabi
+- python3
+- pip3 (see requirements.txt for installed packages)
+- arduino-cli
+
+
 # Install
 ## Use script
 ```sh
