@@ -12,7 +12,7 @@ def main():
         sys.exit(1)
 
     command = sys.argv[1]
-    docker_command = ["sudo", "docker", "run", "-it", "--rm", "-v", f"{os.getcwd()}:/app", DOCKER_IMAGE] + sys.argv[1:]
+    docker_command = ["sudo", "docker", "run", "-it", "-e", "DISPLAY=$DISPLAY", "--rm", "-v", f"{os.getcwd()}:/app", DOCKER_IMAGE] + sys.argv[1:]
 
     try:
         subprocess.run(docker_command, check=True, stderr=subprocess.DEVNULL)
