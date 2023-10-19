@@ -39,12 +39,16 @@ RUN pip3 install -r requirements.txt
 RUN apt-get update && apt-get install -y \
     build-essential \
     gcc-arm-none-eabi \
-    udev
+    udev \
+    minicom
 
 # Install Arduino CLI
 RUN apt-get install -y curl && \
     curl -fsSL https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Linux_64bit.tar.gz | tar -xzC /usr/local/bin && \
     chmod +x /usr/local/bin/arduino-cli
+
+RUN arduino-cli core search
+RUN arduino-cli board listall CH55xDuino:mcs51
 
 
 ################################################
