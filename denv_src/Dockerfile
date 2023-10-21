@@ -42,14 +42,6 @@ RUN apt-get update && apt-get install -y \
     udev \
     minicom
 
-# Install Arduino CLI
-RUN apt-get install -y curl && \
-    curl -fsSL https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Linux_64bit.tar.gz | tar -xzC /usr/local/bin && \
-    chmod +x /usr/local/bin/arduino-cli
-
-RUN arduino-cli core search
-RUN arduino-cli board listall CH55xDuino:mcs51
-
 
 ################################################
 #  WCH Related
@@ -88,6 +80,23 @@ RUN rm -rf /tmp/wch_riscv
 ENV LD_LIBRARY_PATH="/usr/lib/wch:$LD_LIBRARY_PATH"
 ENV PATH="/opt/gcc-riscv/riscv-wch-embedded-gcc-v1.80/bin:$PATH"
 ENV PATH="/opt/openocd/wch-openocd-v1.80/bin:$PATH"
+
+
+# Install Arduino CLI
+RUN apt-get install -y curl && \
+    curl -fsSL https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Linux_64bit.tar.gz | tar -xzC /usr/local/bin && \
+    chmod +x /usr/local/bin/arduino-cli
+
+# RUN arduino-cli core search
+# RUN arduino-cli board listall CH55xDuino:mcs51
+
+RUN mkdir -p /root/.arduino15
+RUN echo '{}' > /root/.arduino15/arduino-cli.yaml
+RUN arduino-cli config add board_manager.additional_urls https://ch55xduino.pek3b.qingstor.com/package_ch55xduino_mcs51_newest_qingcloud_index.json
+RUN arduino-cli config dump
+RUN arduino-cli core install CH55xDuino:mcs51
+
+
 
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
