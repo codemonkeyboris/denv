@@ -44,7 +44,7 @@ RUN apt-get update && apt-get install -y \
 
 
 ################################################
-#  WCH Related
+#  WCH RISCV Related
 ################################################
 # This version is too new for WCH chips
 # # Install xPack GNU RISC-V Embedded GCC
@@ -54,7 +54,6 @@ RUN apt-get update && apt-get install -y \
 # RUN chmod -R +x /opt/xpack-riscv-none-elf-gcc-13.2.0-2/bin
 # ENV PATH="/opt/xpack-riscv-none-elf-gcc-13.2.0-2/bin:${PATH}"
 # RUN rm -rf /tmp/riscv-gcc
-
 
 RUN mkdir -p /tmp/wch_riscv
 RUN wget -P /tmp/wch_riscv http://file.mounriver.com/tools/MRS_Toolchain_Linux_x64_V1.80.tar.xz
@@ -81,23 +80,27 @@ ENV LD_LIBRARY_PATH="/usr/lib/wch:$LD_LIBRARY_PATH"
 ENV PATH="/opt/gcc-riscv/riscv-wch-embedded-gcc-v1.80/bin:$PATH"
 ENV PATH="/opt/openocd/wch-openocd-v1.80/bin:$PATH"
 
+################################################
+#  WCH CH Related
+################################################
+RUN apt-get install -y sdcc
+COPY wch_programmer/chprog.py /usr/local/bin/
+COPY wch_programmer/vnproch55x /usr/local/bin/
+ENV PATH="/usr/local/bin/chprog.py:$PATH"
+ENV PATH="/usr/local/bin/vnproch55x:$PATH"
+
 
 # Install Arduino CLI
 RUN apt-get install -y curl && \
     curl -fsSL https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Linux_64bit.tar.gz | tar -xzC /usr/local/bin && \
     chmod +x /usr/local/bin/arduino-cli
 
-# RUN arduino-cli core search
-# RUN arduino-cli board listall CH55xDuino:mcs51
-
+# Install Boards
 RUN mkdir -p /root/.arduino15
 RUN echo '{}' > /root/.arduino15/arduino-cli.yaml
 RUN arduino-cli config add board_manager.additional_urls https://ch55xduino.pek3b.qingstor.com/package_ch55xduino_mcs51_newest_qingcloud_index.json
 RUN arduino-cli config dump
 RUN arduino-cli core install CH55xDuino:mcs51
-
-
-
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
