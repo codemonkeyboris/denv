@@ -91,9 +91,24 @@ ENV PATH="/usr/local/bin/vnproch55x:$PATH"
 
 
 # Install Arduino CLI
-RUN apt-get install -y curl && \
-    curl -fsSL https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Linux_64bit.tar.gz | tar -xzC /usr/local/bin && \
-    chmod +x /usr/local/bin/arduino-cli
+# RUN apt-get install -y curl && \
+#     curl -fsSL https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Linux_64bit.tar.gz | tar -xzC /usr/local/bin && \
+#     chmod +x /usr/local/bin/arduino-cli
+
+RUN apt-get update && apt-get install -y \
+    git \
+    curl
+
+# Install arduino-cli
+RUN curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/local/bin sh
+
+# Set up Arduino CLI and install the necessary tools and boards
+RUN arduino-cli config init --additional-urls https://arduino.esp8266.com/stable/package_esp8266com_index.json
+RUN arduino-cli core update-index
+RUN arduino-cli core install arduino:avr
+RUN arduino-cli core install esp8266:esp8266
+RUN arduino-cli board listall
+RUN arduino-cli lib install "ArduinoJson"
 
 # Install Boards
 RUN mkdir -p /root/.arduino15
